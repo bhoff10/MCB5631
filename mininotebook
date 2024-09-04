@@ -1,5 +1,5 @@
 # MCB5631
-ssh MCB5631usrXX@xanadu-submit-ext.cam.uchc.edu 
+ssh MCB5631usr19@xanadu-submit-ext.cam.uchc.edu 
 srun –-partition=mcbstudent –-qos=mcbstudent –-pty bash
 cd ..
 pwd
