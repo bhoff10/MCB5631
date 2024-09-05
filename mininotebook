@@ -4,7 +4,7 @@ srun –-partition=mcbstudent –-qos=mcbstudent –-pty bash
 cd ..
 pwd
 ls
-cp -a /home/FCAM/mcb5631/classFiles/MiSeq_SOP/ /home/FCAM/mcb5631/usr19
+cp -a /home/FCAM/mcb5631/classFiles/chipmunk_fastq/ /home/FCAM/mcb5631/usr19
 cd ~
 pwd
 ls
