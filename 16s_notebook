@@ -1,0 +1,7 @@
+#step 1 load and open mothur 
+module load mothur/1.48.0
+mothur
+
+#step 2 create stability files 
+make.file(inputdir=., type=fastq, prefix=stability)
+
