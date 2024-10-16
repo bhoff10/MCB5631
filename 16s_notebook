@@ -5,3 +5,9 @@ mothur
 #step 2 create stability files 
 make.file(inputdir=., type=fastq, prefix=stability)
 
+#step 3 make contiguous sequences 
+make.contigs(file=stability.files, processors=4) 
+
+#step 4 check how many sequences are remaining and how many were lost 
+summary.seqs(fasta=stability.trim.contigs.fasta)
+
