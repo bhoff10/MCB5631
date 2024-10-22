@@ -57,4 +57,16 @@ uster.denovo.vsearch.fasta ,
 count=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.
 vsearch.count_table)
 
+#step 19 identify sequences by aligning them to a known database of taxa
+classify.seqs(fasta=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta, count=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table, reference=trainset9_032012.pds.fasta, taxonomy=trainset9_032012.pds.tax)
+
+#step 20 remove reads that are aligned to things we dont want 
+remove.lineage(fasta=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta, count=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table, taxonomy=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.taxonomy, taxon=Chloroplast-Mitochondria-unknown-Archaea-Eukaryota)
+
+#step 21 see how much was removed
+summary.seqs(fasta=stability.trim.contigs.good.unique.good.filter.unique.precl
+uster.denovo.vsearch.pick.fasta,
+count=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.
+vsearch.pick.count_table)
+
 
