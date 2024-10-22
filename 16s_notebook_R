@@ -56,3 +56,9 @@ miseq.merge.rare74579<- rarefy_even_depth(miseq.merge, sample.size=74579, replac
 miseq.merge.rare74579.alpha<-plot_richness(miseq.merge.rare74579, x="Trapped", measures=c("Observed","Chao1","Shannon"))
 ggsave("miseq.merge.rare74579.alpha.png", miseq.merge.rare74579.alpha)
 
+#step 12 looking at beta diversity 
+miseq.merge.uu<-ordinate(miseq.merge.rare74579, "PCoA", "unifrac", weighted=FALSE) #unweighted unifrac
+miseq.merge.uu.plot<- plot_ordination(miseq.merge.rare74579, miseq.merge.uu, color="Trapped", shape="Trapped") #PCoA plot
+ggsave("miseq.merge.uu.plot.png", miseq.merge.uu.plot)
+miseq.merge.uu.two.plot<- plot_ordination(miseq.merge.rare74579, miseq.merge.uu, color="Trapped", shape="Sex") #PCoA plot
+ggsave("miseq.merge.uu.two.plot.png", miseq.merge.uu.two.plot)
