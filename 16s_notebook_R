@@ -32,3 +32,7 @@ rownames(mothur_map)<-mothur_map$Sample
 
 #step 7 merge metadata variable and phyloseq object
 miseq.merge<-merge_phyloseq(mothur_data,mothur_map)
+
+#step 8 rename columns to true taxonomic ranks 
+colnames(tax_table(miseq.merge))<-c("Kingdom","Phylum","Class","Order","Family","Genus")
+head(tax_table(miseq.merge), n=2)
