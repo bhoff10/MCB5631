@@ -20,3 +20,18 @@ unique.seqs(fasta=stability.trim.contigs.good.fasta, count=stability.contigs.goo
 #step 7 check sequence distribution after merging duplicates
 summary.seqs(count=stability.trim.contigs.good.count_table)
 
+#step 8 reduce sequence to to relevent region (in this case V4 region)
+pcr.seqs(fasta=silva.bacteria.fasta, start=11895, end=25318, keepdots=F)
+
+#step 9 rename file to a better name 
+rename.file(input=silva.bacteria.pcr.fasta, new=silva.v4.fasta)
+
+#step 10 check that reduction of sequences worked
+summary.seqs(fasta=silva.v4.fasta)
+
+#step 11 align customized reference sequence to our sequence
+align.seqs(fasta=stability.trim.contigs.good.unique.fasta, reference=silva.v4.fasta)
+
+#step 12 check sequences after alignment 
+summary.seqs(fasta=stability.trim.contigs.good.unique.align, count=stability.trim.contigs.good.count_table)
+
