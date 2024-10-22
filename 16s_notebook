@@ -102,4 +102,6 @@ count.groups(shared=final.opti_mcc.shared )
 #step 30 standardize data by rarefying (randomly removing sequences untill all have same # of reads)
 sub.sample(shared=final.opti_mcc.shared ,size=2377)
 
+#step 31 generate a distribution of statistics across sequencing depth 
+rarefaction.single(shared=final.opti_mcc.shared, calc=sobs, freq=100)
 
