@@ -1,0 +1,10 @@
+#step 1 getting into R 
+cd chipmunk_fastq2/chipmunk_fastq
+conda activate phylodada2
+module load R/4.3.3 
+R
+
+#step 2 load libraries 
+library (phyloseq)
+library (ggplot2)
+
