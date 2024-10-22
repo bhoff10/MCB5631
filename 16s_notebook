@@ -11,3 +11,12 @@ make.contigs(file=stability.files, processors=4)
 #step 4 check how many sequences are remaining and how many were lost 
 summary.seqs(fasta=stability.trim.contigs.fasta)
 
+#step 5 remove sequences with ambiguous bases and anything longer than 275 bp
+screen.seqs(fasta=stability.trim.contigs.fasta, count=stability.contigs.count_table, maxambig=0, maxlength=275, maxhomop=8)
+
+#step 6 merge duplicate sequences
+unique.seqs(fasta=stability.trim.contigs.good.fasta, count=stability.contigs.good.count_table)
+
+#step 7 check sequence distribution after merging duplicates
+summary.seqs(count=stability.trim.contigs.good.count_table)
+
