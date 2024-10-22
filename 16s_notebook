@@ -96,3 +96,10 @@ dist.seqs(fasta=final.fasta, output=lt)
 #step 28 use clearcut program to create phylogenetic tree
 clearcut(phylip=final.phylip.dist)
 
+#step 29 see how many sequences are in final dataset
+count.groups(shared=final.opti_mcc.shared )
+
+#step 30 standardize data by rarefying (randomly removing sequences untill all have same # of reads)
+sub.sample(shared=final.opti_mcc.shared ,size=2377)
+
+
