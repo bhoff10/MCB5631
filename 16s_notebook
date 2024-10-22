@@ -105,3 +105,16 @@ sub.sample(shared=final.opti_mcc.shared ,size=2377)
 #step 31 generate a distribution of statistics across sequencing depth 
 rarefaction.single(shared=final.opti_mcc.shared, calc=sobs, freq=100)
 
+#step 32 generate phylogney that works well with phyloseq program
+get.oturep(phylip=final.phylip.dist ,
+list=final.opti_mcc.list ,fasta=final.fasta, count=final.count_table,
+cutoff=0.03)
+
+#step 33 modify taxon labels in files and rename OTUs
+system(head -n 1 final.opti_mcc.0.03.rep.fasta)
+system(sed 's/>M.*Otu/>Otu/g' final.opti_mcc.0.03.rep.fasta |sed -e
+'s/|.*//g'> final.0.03.rep.otu.fasta)
+system(head -n 1 final.0.03.rep.otu.fasta)
+dist.seqs(fasta=final.0.03.rep.otu.fasta, output=lt, processors=32)
+clearcut(phylip=final.0.03.rep.otu.phylip.dist )
+quit()
