@@ -46,3 +46,13 @@ ggsave("miseq.merge.rel.bar.png", miseq.merge.rel.bar)
 miseq.merge.glom.phyla.rel<-tax_glom(miseq.merge.rel, taxrank="Phylum")
 miseq.merge.glom.phyla.rel.bar<-plot_bar(miseq.merge.glom.phyla.rel, fill="Phylum") #remove bars that delimit OTUs by combining data within phyla into a single bar
 ggsave("miseq.merge.glom.phyla.rel.bar.png", miseq.merge.glom.phyla.rel.bar)
+
+#step 10 rarefy data before analyzing alpha diversity 
+set.seed(711L) #reproducability 
+miseq.merge.rare74579<- rarefy_even_depth(miseq.merge, sample.size=74579, replace=FALSE)
+#74579 is lowest numner of reads from a sample, check final.opti_mcc.count.summary to see lowest
+
+#step 11 create alpha diversity plots for different metrics 
+miseq.merge.rare74579.alpha<-plot_richness(miseq.merge.rare74579, x="Trapped", measures=c("Observed","Chao1","Shannon"))
+ggsave("miseq.merge.rare74579.alpha.png", miseq.merge.rare74579.alpha)
+
