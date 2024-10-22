@@ -8,3 +8,13 @@ R
 library (phyloseq)
 library (ggplot2)
 
+#step 3 create variables with mothur files
+sharedfile<-"final.opti_mcc.shared"
+taxfile<-"final.opti_mcc.0.03.cons.taxonomy"
+treefile<-"final.0.03.rep.otu.phylip.tre"
+
+
+#step 4 combine previous variables with mothur into workable variable in phyloseq
+mothur_data <- import_mothur(mothur_shared_file = sharedfile,
+mothur_constaxonomy_file = taxfile, mothur_tree_file = treefile)
+
