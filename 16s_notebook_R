@@ -36,3 +36,13 @@ miseq.merge<-merge_phyloseq(mothur_data,mothur_map)
 #step 8 rename columns to true taxonomic ranks 
 colnames(tax_table(miseq.merge))<-c("Kingdom","Phylum","Class","Order","Family","Genus")
 head(tax_table(miseq.merge), n=2)
+
+#step 9 create some taxonomic bar charts to visual taxonomic distribution of reads
+miseq.merge.bar<-plot_bar(miseq.merge,fill="Phylum") #total aboundances within each OTU
+ggsave("miseq.merge.bar.png", miseq.merge.bar)
+miseq.merge.rel<-transform_sample_counts(miseq.merge,function(x) x/sum(x))
+miseq.merge.rel.bar<-plot_bar(miseq.merge.rel, fill="Phylum") #create relative aboundance plot
+ggsave("miseq.merge.rel.bar.png", miseq.merge.rel.bar)
+miseq.merge.glom.phyla.rel<-tax_glom(miseq.merge.rel, taxrank="Phylum")
+miseq.merge.glom.phyla.rel.bar<-plot_bar(miseq.merge.glom.phyla.rel, fill="Phylum") #remove bars that delimit OTUs by combining data within phyla into a single bar
+ggsave("miseq.merge.glom.phyla.rel.bar.png", miseq.merge.glom.phyla.rel.bar)
