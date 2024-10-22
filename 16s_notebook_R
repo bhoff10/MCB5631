@@ -18,3 +18,17 @@ treefile<-"final.0.03.rep.otu.phylip.tre"
 mothur_data <- import_mothur(mothur_shared_file = sharedfile,
 mothur_constaxonomy_file = taxfile, mothur_tree_file = treefile)
 
+#step 5 add chipmunk metadata as a new variable, created a .csv file in excel that looks like shown data frame
+chipmunk_info<-data.frame(Sample=c("DMNS16474.HirdChipmunk118","DMNS16475.HirdChipmunk115","DMNS16476.HirdChipmunk117","DMNS16477.HirdChipmunk116","DMNS16478.HirdChipmunk114","DMNS16479.HirdChipmunk110","DMNS16482.HirdChipmunk112","DMNS16483.HirdChipmunk113","DMNS16484.HirdChipmunk111"),
+                    Subspecies=c(rep("simulans",6),rep("ruficaudus",3)),
+                    Trapped=c(rep("MoscowMtn",5), ("WeitasCrk"), rep("SlateCrk",3)),
+                    putmt=c(rep("TRS",5),rep("TRR",4)),
+                    Sex=c("M","M","M","F","F","F","M","M","F"))
+chipmunk_info<-read.csv(file="chipmunk_info.csv", header=T)
+
+#step 6 format new variable so it is able to merge with phyloseq object
+mothur_map<-sample_data(chipmunk.info)
+rownames(mothur_map)<-mothur_map$Sample
+
+#step 7 merge metadata variable and phyloseq object
+miseq.merge<-merge_phyloseq(mothur_data,mothur_map)
