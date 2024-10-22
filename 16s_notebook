@@ -69,4 +69,11 @@ uster.denovo.vsearch.pick.fasta,
 count=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.
 vsearch.pick.count_table)
 
+#step 22 make new summary file that reflects removals 
+summary.tax(taxonomy=
+stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearc
+h.pds.wang.pick.taxonomy, count=
+stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearc
+h.pick.count_table)
+
 
