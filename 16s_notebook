@@ -90,5 +90,9 @@ label=0.03)
 classify.otu(list=final.opti_mcc.list, count=final.count_table,
 taxonomy=final.taxonomy, label=0.03)
 
+#step 27 calculate pairwise distances between unique sequences to start making phylogenetic tree
+dist.seqs(fasta=final.fasta, output=lt)
 
+#step 28 use clearcut program to create phylogenetic tree
+clearcut(phylip=final.phylip.dist)
 
