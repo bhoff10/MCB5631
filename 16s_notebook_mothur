@@ -1,0 +1,120 @@
+#step 1 load and open mothur 
+module load mothur/1.48.0
+mothur
+
+#step 2 create stability files 
+make.file(inputdir=., type=fastq, prefix=stability)
+
+#step 3 make contiguous sequences 
+make.contigs(file=stability.files, processors=4) 
+
+#step 4 check how many sequences are remaining and how many were lost 
+summary.seqs(fasta=stability.trim.contigs.fasta)
+
+#step 5 remove sequences with ambiguous bases and anything longer than 275 bp
+screen.seqs(fasta=stability.trim.contigs.fasta, count=stability.contigs.count_table, maxambig=0, maxlength=275, maxhomop=8)
+
+#step 6 merge duplicate sequences
+unique.seqs(fasta=stability.trim.contigs.good.fasta, count=stability.contigs.good.count_table)
+
+#step 7 check sequence distribution after merging duplicates
+summary.seqs(count=stability.trim.contigs.good.count_table)
+
+#step 8 reduce sequence to to relevent region (in this case V4 region)
+pcr.seqs(fasta=silva.bacteria.fasta, start=11895, end=25318, keepdots=F)
+
+#step 9 rename file to a better name 
+rename.file(input=silva.bacteria.pcr.fasta, new=silva.v4.fasta)
+
+#step 10 check that reduction of sequences worked
+summary.seqs(fasta=silva.v4.fasta)
+
+#step 11 align customized reference sequence to our sequence
+align.seqs(fasta=stability.trim.contigs.good.unique.fasta, reference=silva.v4.fasta)
+
+#step 12 check sequences after alignment 
+summary.seqs(fasta=stability.trim.contigs.good.unique.align, count=stability.trim.contigs.good.count_table)
+
+#step 13 make sure sequences overlap at same positions 
+screen.seqs(fasta=stability.trim.contigs.good.unique.align, count=stability.trim.contigs.good.count_table, start=1968, end=11550)
+summary.seqs(fasta=current, count=current)
+
+#step 14 filter out overhang regions at both ends of sequence
+filter.seqs(fasta=stability.trim.contigs.good.unique.good.align, vertical=T, trump=.)
+
+#step 15 remove any remaining redundant sequences 
+unique.seqs(fasta=stability.trim.contigs.good.unique.good.filter.fasta, count=stability.trim.contigs.good.good.count_table)
+
+#step 16 merge rare sequences that are likely errors into more aboundant sequences
+pre.cluster(fasta=stability.trim.contigs.good.unique.good.filter.unique.fasta, count=stability.trim.contigs.good.unique.good.filter.count_table, diffs=2)
+
+#step 17 identify and remove chimeric sequences using vsearch software
+chimera.vsearch(fasta=stability.trim.contigs.good.unique.good.filter.unique.precluster.fasta, count=stability.trim.contigs.good.unique.good.filter.unique.precluster.count_table, dereplicate=t)
+
+#step 18 check how many sequences vsearch removed
+summary.seqs(fasta=stability.trim.contigs.good.unique.good.filter.unique.precl
+uster.denovo.vsearch.fasta ,
+count=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.
+vsearch.count_table)
+
+#step 19 identify sequences by aligning them to a known database of taxa
+classify.seqs(fasta=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta, count=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table, reference=trainset9_032012.pds.fasta, taxonomy=trainset9_032012.pds.tax)
+
+#step 20 remove reads that are aligned to things we dont want 
+remove.lineage(fasta=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta, count=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table, taxonomy=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.taxonomy, taxon=Chloroplast-Mitochondria-unknown-Archaea-Eukaryota)
+
+#step 21 see how much was removed
+summary.seqs(fasta=stability.trim.contigs.good.unique.good.filter.unique.precl
+uster.denovo.vsearch.pick.fasta,
+count=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.
+vsearch.pick.count_table)
+
+#step 22 make new summary file that reflects removals 
+summary.tax(taxonomy=
+stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearc
+h.pds.wang.pick.taxonomy, count=
+stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearc
+h.pick.count_table)
+
+#step 23 calculate pairwise distances between aligned sequences
+dist.seqs(fasta=final.fasta, cutoff=0.03)
+
+#step 24 cluster sequences into OTUs based on pairwise distances
+cluster(column=final.dist, count=final.count_table)
+
+#step 25 see how many sequences are in each OTU 
+make.shared(list=final.opti_mcc.list, count=final.count_table,
+label=0.03)
+
+#step 26 figure out what each OTU is by determing best taxa for each group
+classify.otu(list=final.opti_mcc.list, count=final.count_table,
+taxonomy=final.taxonomy, label=0.03)
+
+#step 27 calculate pairwise distances between unique sequences to start making phylogenetic tree
+dist.seqs(fasta=final.fasta, output=lt)
+
+#step 28 use clearcut program to create phylogenetic tree
+clearcut(phylip=final.phylip.dist)
+
+#step 29 see how many sequences are in final dataset
+count.groups(shared=final.opti_mcc.shared )
+
+#step 30 standardize data by rarefying (randomly removing sequences untill all have same # of reads)
+sub.sample(shared=final.opti_mcc.shared ,size=2377)
+
+#step 31 generate a distribution of statistics across sequencing depth 
+rarefaction.single(shared=final.opti_mcc.shared, calc=sobs, freq=100)
+
+#step 32 generate phylogney that works well with phyloseq program
+get.oturep(phylip=final.phylip.dist ,
+list=final.opti_mcc.list ,fasta=final.fasta, count=final.count_table,
+cutoff=0.03)
+
+#step 33 modify taxon labels in files and rename OTUs
+system(head -n 1 final.opti_mcc.0.03.rep.fasta)
+system(sed 's/>M.*Otu/>Otu/g' final.opti_mcc.0.03.rep.fasta |sed -e
+'s/|.*//g'> final.0.03.rep.otu.fasta)
+system(head -n 1 final.0.03.rep.otu.fasta)
+dist.seqs(fasta=final.0.03.rep.otu.fasta, output=lt, processors=32)
+clearcut(phylip=final.0.03.rep.otu.phylip.dist )
+quit()
