@@ -45,3 +45,16 @@ filter.seqs(fasta=stability.trim.contigs.good.unique.good.align, vertical=T, tru
 #step 15 remove any remaining redundant sequences 
 unique.seqs(fasta=stability.trim.contigs.good.unique.good.filter.fasta, count=stability.trim.contigs.good.good.count_table)
 
+#step 16 merge rare sequences that are likely errors into more aboundant sequences
+pre.cluster(fasta=stability.trim.contigs.good.unique.good.filter.unique.fasta, count=stability.trim.contigs.good.unique.good.filter.count_table, diffs=2)
+
+#step 17 identify and remove chimeric sequences using vsearch software
+chimera.vsearch(fasta=stability.trim.contigs.good.unique.good.filter.unique.precluster.fasta, count=stability.trim.contigs.good.unique.good.filter.unique.precluster.count_table, dereplicate=t)
+
+#step 18 check how many sequences vsearch removed
+summary.seqs(fasta=stability.trim.contigs.good.unique.good.filter.unique.precl
+uster.denovo.vsearch.fasta ,
+count=stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.
+vsearch.count_table)
+
+
