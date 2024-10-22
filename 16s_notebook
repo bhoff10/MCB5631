@@ -76,4 +76,19 @@ h.pds.wang.pick.taxonomy, count=
 stability.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearc
 h.pick.count_table)
 
+#step 23 calculate pairwise distances between aligned sequences
+dist.seqs(fasta=final.fasta, cutoff=0.03)
+
+#step 24 cluster sequences into OTUs based on pairwise distances
+cluster(column=final.dist, count=final.count_table)
+
+#step 25 see how many sequences are in each OTU 
+make.shared(list=final.opti_mcc.list, count=final.count_table,
+label=0.03)
+
+#step 26 figure out what each OTU is by determing best taxa for each group
+classify.otu(list=final.opti_mcc.list, count=final.count_table,
+taxonomy=final.taxonomy, label=0.03)
+
+
 
