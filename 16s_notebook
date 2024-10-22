@@ -35,3 +35,13 @@ align.seqs(fasta=stability.trim.contigs.good.unique.fasta, reference=silva.v4.fa
 #step 12 check sequences after alignment 
 summary.seqs(fasta=stability.trim.contigs.good.unique.align, count=stability.trim.contigs.good.count_table)
 
+#step 13 make sure sequences overlap at same positions 
+screen.seqs(fasta=stability.trim.contigs.good.unique.align, count=stability.trim.contigs.good.count_table, start=1968, end=11550)
+summary.seqs(fasta=current, count=current)
+
+#step 14 filter out overhang regions at both ends of sequence
+filter.seqs(fasta=stability.trim.contigs.good.unique.good.align, vertical=T, trump=.)
+
+#step 15 remove any remaining redundant sequences 
+unique.seqs(fasta=stability.trim.contigs.good.unique.good.filter.fasta, count=stability.trim.contigs.good.good.count_table)
+
