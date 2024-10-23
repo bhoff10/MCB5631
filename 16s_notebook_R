@@ -62,3 +62,16 @@ miseq.merge.uu.plot<- plot_ordination(miseq.merge.rare74579, miseq.merge.uu, col
 ggsave("miseq.merge.uu.plot.png", miseq.merge.uu.plot)
 miseq.merge.uu.two.plot<- plot_ordination(miseq.merge.rare74579, miseq.merge.uu, color="Trapped", shape="Sex") #PCoA plot
 ggsave("miseq.merge.uu.two.plot.png", miseq.merge.uu.two.plot)
+
+#extra: making plots asthetic
+miseq.merge.glom.phyla.rel.bar.mod<-miseq.merge.glom.phyla.rel.bar + theme_few() + scale_color_brewer(palette='Spectral') + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+ggsave('miseq.merge.glom.phyla.rel.mod.png', miseq.merge.glom.phyla.rel.mod)
+
+miseq.merge.rare74579.alpha.mod<-miseq.merge.rare74579.alpha + geom_point(color='plum')+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+ggsave('miseq.merge.rare74579.alpha.mod.png', miseq.merge.rare74579.alpha.mod)
+
+miseq.merge.uu.plot.mod<-miseq.merge.uu.plot + theme_few() + geom_point(size=5) + scale_color_manual(values=c('plum','salmon','steelblue'))
+ggsave('miseq.merge.uu.plot.mod.png',miseq.merge.uu.plot.mod)
+
+miseq.merge.uu.two.plot.mod<-miseq.merge.uu.two.plot + theme_few() + geom_point(size=5) + scale_color_manual(values=c('plum','salmon','steelblue'))
+ggsave('miseq.merge.uu.two.plot.mod.png',miseq.merge.uu.two.plot.mod)
