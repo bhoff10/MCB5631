@@ -1,4 +1,5 @@
-#step 1 load and open mothur 
+#step 1 change into directory with data, loading and opening mothur 
+cd chipmunk_fastq2/chipmunk_fastq/
 module load mothur/1.48.0
 mothur
 
