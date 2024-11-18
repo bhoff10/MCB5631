@@ -12,3 +12,7 @@ fastqc evol1_R1.fastq.gz
 #step 4 use sickle program to trim off low quality reads from data 
 module load sickle/1.33
 sickle se -f evol1_R1.fastq.gz -t sanger -o trimmed_evol1_R1.fastq
+
+#step 5 rerun fastqc on trimmed data 
+fastqc trimmed_evol1_R1.fastq
+#again can use filezilla to tranfer output file and look at report 
