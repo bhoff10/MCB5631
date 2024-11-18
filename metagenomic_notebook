@@ -1,0 +1,5 @@
+#step 1 make new directory for project 
+mkdir metagenomic_hw
+
+#step 2 copy necessary files onto new directory 
+cp /home/FCAM/mcb5631/classFiles/evol1_R1.fastq.gz ~/metagenomic_hw/
