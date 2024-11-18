@@ -7,3 +7,4 @@ cp /home/FCAM/mcb5631/classFiles/evol1_R1.fastq.gz ~/metagenomic_hw/
 #step 3 run quality control report for file 
 module load fastqc/0.12.1
 fastqc evol1_R1.fastq.gz
+#use filezilla to tranfer output file and open to see report 
