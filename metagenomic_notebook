@@ -16,3 +16,27 @@ sickle se -f evol1_R1.fastq.gz -t sanger -o trimmed_evol1_R1.fastq
 #step 5 rerun fastqc on trimmed data 
 fastqc trimmed_evol1_R1.fastq
 #again can use filezilla to tranfer output file and look at report 
+
+#step 6 run taxonomy identification report program kraken on trimmed data 
+#optional create kraken directory in metagenomic_hw for organization 
+cd metagenomic_hw 
+mkdir kraken 
+
+#copy kraken script into kraken directory 
+cp /home/FCAM/mcb5631/classFiles/kraken_SMCA24.sh ~/metagenomic_hw/kraken/
+cd kraken 
+
+#change script so it works with file 
+nano kraken_SMCA24.sh 
+#change email 
+#change file used to trimmed_evol1_R1.fastq
+#delete zip file command since not a zipped file 
+#delete mpa style command to make output compatible for krona 
+#save batch script under new name 
+
+#run batch script 
+exit #run on head node
+cd metagenomic_hw/
+sbatch kraken_SMCA_tr.sh 
+
+
