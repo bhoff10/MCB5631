@@ -8,3 +8,7 @@ cp /home/FCAM/mcb5631/classFiles/evol1_R1.fastq.gz ~/metagenomic_hw/
 module load fastqc/0.12.1
 fastqc evol1_R1.fastq.gz
 #use filezilla to tranfer output file and open to see report 
+
+#step 4 use sickle program to trim off low quality reads from data 
+module load sickle/1.33
+sickle se -f evol1_R1.fastq.gz -t sanger -o trimmed_evol1_R1.fastq
