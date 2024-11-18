@@ -39,4 +39,16 @@ exit #run on head node
 cd metagenomic_hw/
 sbatch kraken_SMCA_tr.sh 
 
+#step 7 use a program such as krona to visualize heirachical groups and summarize taxonomic data 
+#you can open kraken_report.txt for first look taxa groups
+
+#running krona (download KronaTools, update it, and run on kraken output file)
+curl -LOk https://github.com/marbl/Krona/releases/download/v2.7/KronaTools-2.7.tar
+tar -xvf KronaTools-2.7.tar
+cd KronaTools-2.7
+./install.pl --prefix /home/FCAM/mcb5631/usr28/metagenomic_hw/kraken/KronaTools-2.7
+./updateTaxonomy.sh
+cd scripts/
+./ImportTaxonomy.pl -t 5 -m 3 -o kraken_tr.krona.html /home/FCAM/mcb5631/usr28/metagenomic_hw/kraken/kraken_report_tr.txt
+#use filezilla to view output file 
 
