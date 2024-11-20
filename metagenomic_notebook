@@ -62,4 +62,20 @@ cp /home/FCAM/mcb5631/classFiles/humann2Batch_SMCA.sh .
 nano humann2Batch_SMCA.sh 
 #edit email, add path to trimmed fastq file, and change name of output file 
 
+#step 9 assembly of shorter reads into longer contigs using ray alignment 
+#most important part is determining what kmer number to use 
+#can make educated guess or use a program such as kmergenie to aid in kmer selection 
 
+#make new directory in /metagenomic_hw for organization and copy or make batch script for ray 
+cd metagenomic_hw/
+mkdir ray 
+cd ray/
+cp /home/FCAM/mcb5631/classFiles/rayBatch_SMCA.sh .
+
+#change batch script and run it 
+nano rayBatch_SMCA.sh 
+#change -k ## to kmer number you are using, change input file to approriate trimmed fastq file, change output file to reflect data name (ray_evol1_31)
+#exit and save as new name rayBatch_SMCA_31.sh 
+#exit head node and run script 
+exit 
+sbatch rayBatch_SMCA_31.sh 
