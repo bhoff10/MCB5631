@@ -2,9 +2,11 @@
 mkdir metagenomic_hw
 
 #step 2 copy necessary files onto new directory 
-cp /home/FCAM/mcb5631/classFiles/evol1_R1.fastq.gz ~/metagenomic_hw/
+mkdir fastqc #organization purposes
+cp /home/FCAM/mcb5631/classFiles/evol1_R1.fastq.gz ~/metagenomic_hw/fastqc
 
 #step 3 run quality control report for file 
+cd metagenomic_hw/fastqc
 module load fastqc/0.12.1
 fastqc evol1_R1.fastq.gz
 #use filezilla to tranfer output file and open to see report 
@@ -24,6 +26,7 @@ mkdir kraken
 
 #copy kraken script into kraken directory 
 cp /home/FCAM/mcb5631/classFiles/kraken_SMCA24.sh ~/metagenomic_hw/kraken/
+cd ..
 cd kraken 
 
 #change script so it works with file 
@@ -54,8 +57,9 @@ cd scripts/
 
 #step 8 identifying gene function with humann2 
 #make new directory for orgaization 
+cd ..
 mkdir humann2
-cd ~/metagenomic_hw/humann2/
+cd humann2
 
 #copy and edit humann2 batch script 
 cp /home/FCAM/mcb5631/classFiles/humann2Batch_SMCA.sh . 
@@ -67,7 +71,7 @@ nano humann2Batch_SMCA.sh
 #can make educated guess or use a program such as kmergenie to aid in kmer selection 
 
 #make new directory in /metagenomic_hw for organization and copy or make batch script for ray 
-cd metagenomic_hw/
+cd ..
 mkdir ray 
 cd ray/
 cp /home/FCAM/mcb5631/classFiles/rayBatch_SMCA.sh .
