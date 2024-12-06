@@ -37,6 +37,15 @@ exit
 cd final_proj/sample_1/
 sbatch kraken/kraken_SMCA24_1.sh 
 
-
+#step 5 krona for taxonomic visualization (download KronaTools, update it, and run on kraken output file)
+cd final_proj/sample_1/kraken
+curl -LOk https://github.com/marbl/Krona/releases/download/v2.7/KronaTools-2.7.tar
+tar -xvf KronaTools-2.7.tar
+cd KronaTools-2.7
+./install.pl --prefix /home/FCAM/mcb5631/usr28/final_proj/sample_1/kraken/KronaTools-2.7
+./updateTaxonomy.sh
+cd scripts/
+./ImportTaxonomy.pl -t 5 -m 3 -o kraken_tr.krona.html /home/FCAM/mcb5631/usr28/final_proj/sample_1/kraken/kraken_report.txt
+#use filezilla to view output file and look at taxonomy 
 
 
