@@ -61,3 +61,16 @@ sbatch humann2/humann2Batch_SMCA_S1.sh
 #view parts of output file to assess gene function 
 
 #repeat steps 2 through 6 for samples 2 and 3 
+
+#Part 2 Phyloseq 
+
+#step 7 convert kraken_report.txt files into .biom files 
+
+#create conda enviornment to install kraken-biom, a program that converts .txt to .biom 
+conda create -n kraken-biom-env
+conda activate kraken-biom-env
+conda install -c conda-forge biom-format
+#creates directory biom-format in final_proj
+
+
+
