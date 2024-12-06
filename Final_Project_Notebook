@@ -1,0 +1,19 @@
+#Part 1 Metagenomics 
+
+#Step 1 download samples 
+#download samples from: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1119528 
+#I used sample 1, 26, and 55
+
+#Step 2 make new directories for project and upload samples to cluster 
+mkdir final_proj 
+cd final_proj/
+mkdir sample_1 
+cd sample_1 
+mkdir fastqc
+mkdir kraken 
+mkdir humann2
+#use filezilla to upload sample 1 fastq file into ~/final_proj/sample_1/fastqc
+
+
+
+
