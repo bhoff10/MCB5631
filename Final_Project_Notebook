@@ -17,7 +17,7 @@ mkdir humann2
 #step 3 run fastqc to assess quality of sample 
 cd fastqc
 module load fastqc/0.12.1
-gunzip SRR29267809.fastq 
+gunzip SRR29267809.fastq.gz
 fastqc SRR29267809.fastq 
 #use filezilla to tranfer output file and open to see report 
 
