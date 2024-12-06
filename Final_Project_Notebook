@@ -48,4 +48,16 @@ cd scripts/
 ./ImportTaxonomy.pl -t 5 -m 3 -o kraken_tr.krona.html /home/FCAM/mcb5631/usr28/final_proj/sample_1/kraken/kraken_report.txt
 #use filezilla to view output file and look at taxonomy 
 
+#step 6 identifying gene function with humann2 
+cd ~
+cd final_proj/sample_1/humann2
+cp /home/FCAM/mcb5631/classFiles/humann2Batch_SMCA.sh . 
+nano humann2Batch_SMCA.sh 
+#edit email, add path to sample_1 fastq file, and change name of output file to humann2_sample_1
 
+exit # run on head node 
+cd final_proj/sample_1/
+sbatch humann2/humann2Batch_SMCA_S1.sh
+#view parts of output file to assess gene function 
+
+#repeat steps 2 through 6 for samples 2 and 3 
