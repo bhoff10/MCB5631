@@ -126,3 +126,11 @@ alpha_plot<-plot_richness(physeq = gut_sample,
 gut_sample <- subset_taxa(gut_sample, Genus != "")
 #transform to percentages 
 gut_percent<- transform_sample_counts(gut_sample, function(x) x*100/sum(x))
+
+#step 11 create beta diversity plots 
+#two step process to compare samples
+gut_NMDS<- ordinate(physeq = gut_percent, method = "NMDS", 
+                       distance = "bray")
+
+beta_plot<-plot_ordination(gut_percent, gut_NMDS)+
+  theme_classic()
