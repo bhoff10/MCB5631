@@ -84,5 +84,23 @@ cp kraken_report2.txt .
 cp kraken_report3.txt .
 kraken-biom kraken_report1.txt kraken_report2.txt kraken_report3.txt -o allsample.biom #make sure to do all reports in same file 
 
+#step 8 format .biom file for use in phyloseq 
+#from this point you can choose to use R on the cluster or in RStudio, I choose to use RStudio 
+#exit from cluster and load up RStudio 
+#use filezilla to move allsample.biom into computer perferable I folder, I used a mcb5631 folder 
+#set working directory in RStudio to folder allsample.biom is in 
 
+#install packages that may not be already loaded 
+
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("phyloseq")
+BiocManager::install("biomformat")
+
+#load necessary packages 
+library("phyloseq")
+library("biomformat")
+library("ggplot2")
+library("RColorBrewer")
 
