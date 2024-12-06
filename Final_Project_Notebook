@@ -14,6 +14,13 @@ mkdir kraken
 mkdir humann2
 #use filezilla to upload sample 1 fastq file into ~/final_proj/sample_1/fastqc
 
+#step 3 run fastqc to assess quality of sample 
+cd fastqc
+module load fastqc/0.12.1
+gunzip SRR29267809.fastq 
+fastqc SRR29267809.fastq 
+#use filezilla to tranfer output file and open to see report 
+
 
 
 
