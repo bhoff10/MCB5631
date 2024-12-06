@@ -191,3 +191,24 @@ gut_df_vanc %>%
   geom_point(size=3, color=c('plum','salmon','steelblue'))+
   labs(x = "", y = "Vancomycin-specific index")+
   theme_classic()
+
+#step 16 predict suceptibility to vancomycon for genera in sample 1 
+
+#create variable for genera of just sample 1 and calculate susceptibility to vancomycin for each genus 
+sample1 <- gut_fam_df %>% 
+  filter(Sample %in% "kraken_report1")%>%
+  mutate(taxon = fct_reorder(Genus, Abundance)) %>%
+  mutate(susceptibility = antibiotic_susceptibility_vancomycin(Genus))
+
+#remove all genera except for 35 most abundant 
+sample1<-sample1[-c(36:942),]
+
+#create graph for suceptibility of top 35 most abundant genera in sample 1 
+sample1 %>%
+  ggplot(aes(x = Abundance, y = taxon, shape = susceptibility)) +
+  geom_point() +
+  scale_shape_manual(values = c(1, 19), na.value = 3)+
+  theme_classic()+
+  ylab("Genus")+
+  ggtitle('Top 35 Genera of Report1s Susceptibility to Vancomycin')+
+  theme(plot.title = element_text(size = 10))
