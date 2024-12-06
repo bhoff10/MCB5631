@@ -111,3 +111,12 @@ gut_sample<- import_biom("~/MCB5631/allsample.biom")
 gut_sample@tax_table@.Data <- substring(gut_sample@tax_table@.Data, 4) 
 #add taxonomic heirarchy as column names 
 colnames(gut_sample@tax_table@.Data)<- c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+
+#step 9 create alpha diversity plots 
+#remove organisms that are not bacteria 
+gut_sample<- subset_taxa(gut_sample, Kingdom == "Bacteria")
+#create plots
+alpha_plot<-plot_richness(physeq = gut_sample, 
+              measures = c("Chao1","Shannon"))+
+  xlab("") 
+#can do other alpha diversity metrics as well 
