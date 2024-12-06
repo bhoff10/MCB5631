@@ -104,3 +104,10 @@ library("biomformat")
 library("ggplot2")
 library("RColorBrewer")
 
+#create a variable with .biom file 
+gut_sample<- import_biom("~/MCB5631/allsample.biom")
+
+#remove unnecessary characters (ex. g__Roseburia to Roseburia)
+gut_sample@tax_table@.Data <- substring(gut_sample@tax_table@.Data, 4) 
+#add taxonomic heirarchy as column names 
+colnames(gut_sample@tax_table@.Data)<- c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")
