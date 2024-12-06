@@ -172,3 +172,22 @@ plot_lac<- ggplot(lac_df, aes(x=Sample, y=Abundance, fill=Genus))+
   theme_classic()+
   xlab("")+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+#part 3 mirix 
+
+#step 14 compute responses to vancomycon for each phylum in all 3 samples 
+
+devtools::install_github("PennChopMicrobiomeProgram/mirix")
+library(mirix)
+library(tidyverse)
+
+gut_df_vanc<- gut_df %>%
+  group_by(Sample) %>%
+  summarise(vanc = mirix_vancomycin(Abundance, Phylum), .groups="drop")
+
+#step 15 create graph of mirix values for vancomycin response for each sample 
+gut_df_vanc %>%
+  ggplot(aes(x=Sample, y=vanc))+
+  geom_point(size=3, color=c('plum','salmon','steelblue'))+
+  labs(x = "", y = "Vancomycin-specific index")+
+  theme_classic()
