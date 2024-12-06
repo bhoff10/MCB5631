@@ -21,6 +21,22 @@ gunzip SRR29267809.fastq
 fastqc SRR29267809.fastq 
 #use filezilla to tranfer output file and open to see report 
 
+#step 4 run kraken on sample for taxonomy report file 
+cd ..
+cd kraken 
+cp /home/FCAM/mcb5631/classFiles/kraken_SMCA24.sh . 
+nano kraken_SMCA24.sh 
+#change email 
+#change file used to SRR29267809.fastq 
+#delete zip file command since not a zipped file 
+#delete mpa style command to make output compatible for krona 
+#save batch script under new name kraken_SMCA24_1.sh
+
+#run batch script on head node
+exit 
+cd final_proj/sample_1/
+sbatch kraken/kraken_SMCA24_1.sh 
+
 
 
 
