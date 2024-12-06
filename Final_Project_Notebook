@@ -149,3 +149,26 @@ rel_plot<-ggplot(gut_df, aes(x=Sample,y=Abundance, fill=Phylum))+
   theme_classic()+
   xlab("")+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+#step 13 create relative adundance plot for genera of family Lachnospiraceae
+
+#create table for just Lachnospiraceae
+lac<- subset_taxa(gut_sample, Family == "Lachnospiraceae")
+
+#create abundances and sample just genus level 
+lac_per<-transform_sample_counts(lac, function(x) x*100/sum(x))
+lac_glom<- tax_glom(lac_per, taxrank= "Genus")
+
+lac_df<- psmelt(lac_glom)
+#anything under abundance of 5 becomes one color on plot 
+lac_df$Genus[lac_df$Abundance < 5] <-"Genera < 5.0 abund"
+lac_df$Genus<- as.factor(lac_df$Genus)
+
+gen_color_lac<- colorRampPalette(brewer.pal(8, "Pastel2")) (length(levels(lac_df$Genus)))
+
+plot_lac<- ggplot(lac_df, aes(x=Sample, y=Abundance, fill=Genus))+
+  geom_bar(aes(), stat="identity", position="stack")+
+  #scale_fill_manual(values = gen_color_lac)+
+  theme_classic()+
+  xlab("")+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
