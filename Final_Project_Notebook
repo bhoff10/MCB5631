@@ -72,5 +72,17 @@ conda activate kraken-biom-env
 conda install -c conda-forge biom-format
 #creates directory biom-format in final_proj
 
+#once installed rename kraken_report.txt to unique name for each sample 
+cd ~/final_proj/sample_1/kraken 
+mv kraken_report.txt kraken_report1.txt #repeat for samples 2 and 3 
+
+#lets convert to .biom 
+cd ..
+cd biom-format/
+cp kraken_report1.txt .
+cp kraken_report2.txt .
+cp kraken_report3.txt .
+kraken-biom kraken_report1.txt kraken_report2.txt kraken_report3.txt -o allsample.biom #make sure to do all reports in same file 
+
 
 
