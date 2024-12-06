@@ -181,6 +181,7 @@ devtools::install_github("PennChopMicrobiomeProgram/mirix")
 library(mirix)
 library(tidyverse)
 
+#assign suceptibilty to every phylum in each sample to vancomycin  
 gut_df_vanc<- gut_df %>%
   group_by(Sample) %>%
   summarise(vanc = mirix_vancomycin(Abundance, Phylum), .groups="drop")
